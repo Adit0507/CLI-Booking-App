@@ -4,8 +4,8 @@ import "fmt"
 func main(){
 	// := only applies to variables
 	conferenceName :="Go Conference"
-	const conferenceTickets int = 50
-	var remainingTickets uint = 20
+	const conferenceTickets int = 70
+	var remainingTickets uint = 50
 
 	// checking the data types of the variables
 	fmt.Printf("conferenceTickets is %T, remainingTickets is %T, conferenceName is %T\n", conferenceTickets, remainingTickets, conferenceName)
@@ -17,7 +17,7 @@ func main(){
 	var firstName string
 	var lastName string
 	var email string
-	var userTickets int
+	var userTickets uint
 	
 	// Ask user for their name
 	fmt.Println("Enter your first name: ")
@@ -32,5 +32,9 @@ func main(){
 	fmt.Println("Enter no. of tickets:")
 	fmt.Scan(&userTickets)
 
+	remainingTickets = remainingTickets - userTickets
+
 	fmt.Printf("Thank you %v %v for booking %v tickets, You will receive confirmation mail at %v\n", firstName, lastName, userTickets,email)
+
+	fmt.Printf("%v remaining Tickets for %v\n", remainingTickets, conferenceName)
 }
