@@ -34,6 +34,7 @@ func main(){
 				break
 			}
 		} else {
+			
 			if !isValidName {
 				fmt.Println("First name or last name u entered is too short")
 			}
