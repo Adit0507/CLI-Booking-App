@@ -110,5 +110,8 @@ func bookTicket(userTickets uint,firstName string, lastName string, email string
 
 	fmt.Printf("Thank you %v %v for booking %v tickets, You will receive confirmation mail at %v\n", firstName, lastName, userTickets,email)
 	fmt.Printf("%v remaining Tickets for %v\n", remainingTickets, conferenceName)
-	
+}
+
+func sendTicket() {
+	fmt.Printf("")
 }
