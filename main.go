@@ -3,6 +3,8 @@ package main
 import (
 	"booking-app/helper"
 	"fmt"
+	"time"
+	"sync"
 )
 
 // := only applies to variables
@@ -19,11 +21,11 @@ type UserData struct {
 	isOptedInForNewsLetter bool
 }
 
+var wg = sync.WaitGroup{}
+
 func main(){
 	
-	greetUsers()
-
-	for {
+	greetUsers()	
 		firstName , lastName , email , userTickets := getUserInput()
   		isValidEmail, isValidName, isValidUserTicketNumber := helper.ValidateUserInput(firstName, lastName, email, userTickets, remainingTickets)		
 		
@@ -31,6 +33,9 @@ func main(){
 		if isValidEmail && isValidName && isValidUserTicketNumber{
 
 			bookTicket(userTickets, firstName, lastName, email)
+			
+			wg.Add(1)
+			go sendTicket(userTickets,firstName, lastName, email)	//starts a new goroutine
 			
 			// call function print first names
 			firstNames := getFirstNames()
@@ -40,7 +45,6 @@ func main(){
 			if noTicketsRemaining {
 				// end program
 				fmt.Println("Our conference is booked out. See you next year 😊")
-				break
 			}
 		} else {
 			
@@ -56,7 +60,7 @@ func main(){
 				fmt.Println("No. of tickets u entered is invalid")
 			}
 		}
-	}
+		wg.Wait()
 }
 
 func greetUsers(){
@@ -112,6 +116,12 @@ func bookTicket(userTickets uint,firstName string, lastName string, email string
 	fmt.Printf("%v remaining Tickets for %v\n", remainingTickets, conferenceName)
 }
 
-func sendTicket() {
-	fmt.Printf("")
+func sendTicket(userTickets uint, firstName string, lastName string, email string) {
+	time.Sleep(4*time.Second)
+	var ticket=  fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName)
+	fmt.Println("--------------------------")
+	fmt.Printf("Sending ticket 🚀:\n%v \nto email address %v\n", ticket, email)
+	fmt.Println("--------------------------")
+
+	wg.Done()
 }
